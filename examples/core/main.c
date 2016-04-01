@@ -17,7 +17,7 @@ int main(void)
 	MAT *img = cv_imcreate(img_data, 5, 5);
 
 	/* print image pixels */
-	printf("image:\n");
+	printf("\nimage:\n");
 	cv_imprint(img);
 
 	return EXIT_SUCCESS;
