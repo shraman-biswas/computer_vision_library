@@ -4,7 +4,7 @@
 static void floodrow(const MAT *m, MAT *res, int i, int j, double label)
 {
 	int k=j;
-	/* fil starting pixel */
+	/* fill starting pixel */
 	MSET(res, i, j, label);
 	/* fill left pixels */
 	while ((--k > 0) && (MGET(m, i, k) == MGET(m, i, k+1)))
