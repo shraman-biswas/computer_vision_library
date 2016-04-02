@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "core/core.h"
+#include "highgui/highgui.h"
 #include "imgproc/imgproc.h"
 
 #endif

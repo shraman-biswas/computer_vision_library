@@ -26,11 +26,13 @@ int main(void)
 	img = cv_imcreate(img_data, 12, 12);
 	printf("\nbinary image:\n");
 	cv_imprint(img);
+	/* cv_imshow("binary image", img); */
 
 	/* labelled connected components */
 	res = cv_conncomp(img, 0);
 	printf("\nlabelled connected components:\n");
 	cv_imprint(res);
+	cv_imshow("labelled connected components", res);
 
 	return EXIT_SUCCESS;
 }
