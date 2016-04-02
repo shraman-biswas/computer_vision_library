@@ -1,8 +1,8 @@
 CXX	=	gcc
 INC	=	../../include/cv
 FLAGS	=	-Wall -O3 -ggdb -I$(INC)
-LIBS	=	-lgsl -lgslcblas
-SOURCE	=	main.c $(INC)/core/core.c
+LIBS	=	-lgsl -lgslcblas -lplplotd
+SOURCE	=	main.c $(INC)/core/* $(INC)/highgui/*
 BIN	=	main
 
 all:
