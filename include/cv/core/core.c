@@ -27,7 +27,7 @@ void cv_imprint(const MAT *m)
 	}
 }
 
-/* convert 1d array to 2d array */
+/* convert matrix to 2d array */
 void cv_to2d(const MAT *m, double **data)
 {
 	if (!m)
