@@ -1,30 +1,36 @@
 #include "blob.h"
 
-/* flood fill a row of pixels */
-static void floodrow(const MAT *m, MAT *res, int i, int j, double label)
+static void update(int *ids, int l1, int l2)
 {
-	int k=j;
-	/* fill starting pixel */
-	MSET(res, i, j, label);
-	/* fill left pixels */
-	while ((--k > 0) && (MGET(m, i, k) == MGET(m, i, k+1)))
-		MSET(res, i, k, label);
-	/* fill right pixels */
-	k = j;
-	while ((++k < m->size2) && (MGET(m, i, k) == MGET(m, i, k-1)))
-		MSET(res, i, k, label);
+	int p=-1, val=-1;
+	if (l1 == l2) {
+		return;
+	} else if (l1 < l2) {
+		p = l2;
+		val = l1;
+	} else if (l2 < l1) {
+		p = l1;
+		val = l2;
+	}
+
+	while ((ids[p] >= 0) && (ids[p] != val))
+		p = ids[p];
+	ids[p] = val;
 }
 
-
-/* TODO: add grayscale support */
+/* TODO: optimize code */
 /* labelled connected components algorithm */
 MAT *cv_conncomp(const MAT *m, int bg)
 {
 	if (!m)
 		cv_error("cv_conncomp: source matrix not provided!\n");
 	int i, j, cnt=1;
-	double label, pixel=0;
+	double pixel=0;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
+
+	/* new vars */
+	int ids[10] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+	double label1, label2;
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
@@ -34,6 +40,13 @@ MAT *cv_conncomp(const MAT *m, int bg)
 				continue;
 			if (pixel == MGET(m, i, j-1)) {
 				MSET(res, i, j, MGET(res, i, j-1));
+				/* when set left, look up */
+				if (pixel == MGET(m, i-1, j)) {
+					label1 = MGET(res, i, j);
+					label2 = MGET(res, i-1, j);
+					update(ids, (int)label1, (int)label2);
+				}
+				/* */
 			} else if (pixel == MGET(m, i-1, j)) {
 				MSET(res, i, j, MGET(res, i-1, j));
 			} else {
@@ -42,17 +55,18 @@ MAT *cv_conncomp(const MAT *m, int bg)
 		}
 	}
 
+	/* debug ids */
+	//for (i=0; i<10; ++i)
+	//	printf("ids[%i] = %d\n", i, ids[i]);
+
 	/* pass 2 */
-	for (i=m->size1-2; i>0; --i) {
-		for (j=m->size2-2; j>0; --j) {
-			pixel = MGET(m, i, j);
-			if (!bg && !pixel)
-				continue;
-			if ((MGET(res, i, j) !=
-				(label = MGET(res, i+1, j))) &&
-				(pixel == MGET(m, i+1, j))) {
-				floodrow(m, res, i, j, label);
-			}
+	int p;
+	for (i=1; i< m->size1-1; ++i) {
+		for (j=1; j< m->size2-1; ++j) {
+			p = MGET(res, i, j);
+			while (ids[p] >= 0)
+				p = ids[p];
+			MSET(res, i, j, p);
 		}
 	}
 
