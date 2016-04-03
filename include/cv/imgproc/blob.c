@@ -12,7 +12,7 @@ MAT *cv_conncomp(const MAT *m, int bg)
 
 	/* setup union structure of label ids */
 	int *ids = unew();
-	uadd(un, 0);
+	uadd(ids, 0);
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
