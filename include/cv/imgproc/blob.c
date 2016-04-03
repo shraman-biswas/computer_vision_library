@@ -15,6 +15,8 @@ static void floodrow(const MAT *m, MAT *res, int i, int j, double label)
 		MSET(res, i, k, label);
 }
 
+
+/* TODO: add grayscale support */
 /* labelled connected components algorithm */
 MAT *cv_conncomp(const MAT *m, int bg)
 {
