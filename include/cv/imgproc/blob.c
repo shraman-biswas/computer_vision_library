@@ -1,8 +1,5 @@
 #include "blob.h"
 
-/* union array */
-static int ids[100] = {-1};
-
 /* union add */
 static void uadd(int *ids, int l1, int l2)
 {
@@ -36,6 +33,9 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	int b1, b2, i, j, k=1;
 	double px;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
+
+	/* union array of label ids */
+	int ids[100] = {-1};
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
