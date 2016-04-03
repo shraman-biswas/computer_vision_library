@@ -8,6 +8,12 @@
 
 #include "../core/core.h"
 
+/* macros */
+#define NONE		0
+#define TOP_ONLY	1
+#define LEFT_ONLY	2
+#define LEFT_AND_TOP	3
+
 /* function prototypes */
 MAT *cv_conncomp(const MAT *const m, int bg);
 

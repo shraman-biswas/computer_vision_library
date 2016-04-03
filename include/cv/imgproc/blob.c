@@ -46,16 +46,16 @@ MAT *cv_conncomp(const MAT *m, int bg)
 			b1 = (px == MGET(m, i, j-1));	/* check left pixel */
 			b2 = (px == MGET(m, i-1, j));	/* check up pixel */
 			switch ((b1 << 1) | b2) {
-			case 0:
+			case NONE:
 				ids[k] = -1;
 				MSET(res, i, j, k++);
 				break;
-			case 1:
+			case TOP_ONLY:
 				MSET(res, i, j, MGET(res, i-1, j));
 				break;
-			case 3:
+			case LEFT_AND_TOP:
 				uadd(ids, MGET(res, i, j-1), MGET(res, i-1, j));
-			case 2:
+			case LEFT_ONLY:
 				MSET(res, i, j, MGET(res, i, j-1));
 				break;
 			}
