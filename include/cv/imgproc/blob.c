@@ -6,7 +6,7 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	if (!m)
 		cv_error("cv_conncomp: source matrix not provided!\n");
 
-	int b1, b2, i, j, k=1;
+	int b1, b2, i, j, cnt=1;
 	double px;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
 
@@ -24,8 +24,8 @@ MAT *cv_conncomp(const MAT *m, int bg)
 			b2 = (px == MGET(m, i-1, j));	/* check up pixel */
 			switch ((b1 << 1) | b2) {
 			case NONE:
-				uadd(ids, k);
-				MSET(res, i, j, k++);
+				uadd(ids, cnt);
+				MSET(res, i, j, cnt++);
 				break;
 			case TOP_ONLY:
 				MSET(res, i, j, MGET(res, i-1, j));
