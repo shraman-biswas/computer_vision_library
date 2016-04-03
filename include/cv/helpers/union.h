@@ -8,7 +8,7 @@
 /* function prototypes */
 int *unew(void);
 void ufree(int *un);
-void uadd(int *un, int val);
+void uadd(int *un, int n);
 void uset(int *un, int n1, int n2);
 int uget(int *un, int n);
 

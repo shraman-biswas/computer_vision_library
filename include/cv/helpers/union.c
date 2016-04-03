@@ -7,7 +7,6 @@ int *unew(void)
 	int *un = (int *)malloc(100 * sizeof(int));
 	if (!un)
 		cv_error("unew: union structure could not be created!");
-	uadd(un, 0);
 	return un;
 }
 
@@ -17,13 +16,13 @@ void ufree(int *un)
 	free(un);
 }
 
-/* add new union structure element */
+/* add new union structure node */
 void uadd(int *un, int n)
 {
 	un[n] = -1;
 }
 
-/* set new union structure link between elements n1 and n2 */
+/* set new union structure link between nodes n1 and n2 */
 void uset(int *un, int n1, int n2)
 {
 	int tmp;
@@ -39,7 +38,7 @@ void uset(int *un, int n1, int n2)
 	un[n1] = n2;
 }
 
-/* get union structure parent element */
+/* get union structure parent node */
 int uget(int *un, int n)
 {
 	while (un[n] >= 0)

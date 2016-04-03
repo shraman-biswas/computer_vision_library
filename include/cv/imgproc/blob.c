@@ -10,8 +10,9 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	double px;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
 
-	/* union structure of label ids */
+	/* setup union structure of label ids */
 	int *ids = unew();
+	uadd(un, 0);
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
