@@ -7,6 +7,7 @@
 #include <gsl/gsl_matrix.h>
 
 #include "../core/core.h"
+#include "../helpers/union.h"
 
 /* macros */
 #define NONE		0
