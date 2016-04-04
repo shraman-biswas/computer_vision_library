@@ -1,11 +1,11 @@
 #include "disjointset.h"
 
-/* TODO: implement disjoint-set with pointers */
+/* TODO: implement disjoint-set with a forest */
 
 /* create new disjoint-set */
 int *dscreate(void)
 {
-	int *ds = (int *)calloc(100, sizeof(int));
+	int *ds = (int *)calloc(DSMAX, sizeof(int));
 	if (!ds)
 		cv_error("dscreate: disjoint-set could not be created!\n");
 	return ds;
@@ -26,23 +26,32 @@ void dsadd(int *ds, int s)
 /* create disjoint-set union between sets s1 and s2 */
 void dsunion(int *ds, int s1, int s2)
 {
-	int tmp;
-	if (s1 == s2)
+	int p1, p2;
+	p1 = dsfind(ds, s1);
+	p2 = dsfind(ds, s2);
+	if (p1 == p2)
 		return;
-	if (s1 < s2) {
-		tmp = s1;
-		s1 = s2;
-		s2 = tmp;
+	/* union by size optimization */
+	if (p1 < p2) { /* actually, (ds[p1] < ds[p2]) */
+		ds[s2] = p1;
+		ds[p1]--;
+	} else {
+		ds[s1] = p2;
+		ds[p2]--;
 	}
-	while (ds[s1] > s2)
-		s1 = ds[s1];
-	ds[s1] = s2;
 }
 
 /* disjoint-set find parent of set */
 int dsfind(int *ds, int s)
 {
+	int tmp, i = s;
 	while (ds[s] >= 0)
 		s = ds[s];
+	/* path compression optimization */
+	while (ds[i] >= 0) {
+		tmp = i;
+		i = ds[i];
+		ds[tmp] = s;
+	}
 	return s;
 }

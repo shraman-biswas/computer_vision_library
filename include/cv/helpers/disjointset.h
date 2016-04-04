@@ -5,11 +5,14 @@
 
 #include "../core/core.h"
 
+/* macros */
+#define DSMAX	100
+
 /* function prototypes */
 int *dscreate(void);
-void dsfree(int *un);
-void dsadd(int *un, int n);
-void dsunion(int *un, int n1, int n2);
-int dsfind(int *un, int n);
+void dsfree(int *ds);
+void dsadd(int *ds, int d);
+void dsunion(int *ds, int s1, int s2);
+int dsfind(int *ds, int s);
 
 #endif

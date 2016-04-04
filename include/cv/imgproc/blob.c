@@ -6,13 +6,13 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	if (!m)
 		cv_error("cv_conncomp: source matrix not provided!\n");
 
-	int i, j, b1, b2, l1, l2, cnt=1;
+	int i, j, b1, b2, l1, l2, cnt=1, *labels=NULL;
 	double px;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
 
-	/* setup disjoint-set of label ids */
-	int *ids = dscreate();
-	dsadd(ids, 0);
+	/* setup disjoint-set of labels */
+	labels = dscreate();
+	dsadd(labels, 0);
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
@@ -21,10 +21,10 @@ MAT *cv_conncomp(const MAT *m, int bg)
 			if (!bg && !px)
 				continue;
 			b1 = (px == MGET(m, i, j-1));	/* check left pixel */
-			b2 = (px == MGET(m, i-1, j));	/* check up pixel */
+			b2 = (px == MGET(m, i-1, j));	/* check top pixel */
 			switch ((b1 << 1) | b2) {
 			case NONE:
-				dsadd(ids, cnt);
+				dsadd(labels, cnt);
 				MSET(res, i, j, cnt++);
 				break;
 			case TOP_ONLY:
@@ -33,7 +33,8 @@ MAT *cv_conncomp(const MAT *m, int bg)
 			case LEFT_AND_TOP:
 				l1 = MGET(res, i, j-1); /* left pixel label */
 				l2 = MGET(res, i-1, j); /* top pixel label */
-				dsunion(ids, l1, l2);
+				if (l1 != l2)
+					dsunion(labels, l1, l2);
 			case LEFT_ONLY:
 				MSET(res, i, j, MGET(res, i, j-1));
 				break;
@@ -44,9 +45,9 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	/* pass 2 */
 	for (i=1; i< m->size1-1; ++i) {
 		for (j=1; j< m->size2-1; ++j)
-			MSET(res, i, j, dsfind(ids, MGET(res, i, j)));
+			MSET(res, i, j, dsfind(labels, MGET(res, i, j)));
 	}
 
-	dsfree(ids);
+	dsfree(labels);
 	return res;
 }
