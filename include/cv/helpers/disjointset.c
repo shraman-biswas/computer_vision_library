@@ -31,7 +31,8 @@ void dsunion(int *ds, int s1, int s2)
 	p2 = dsfind(ds, s2);
 	if (p1 == p2)
 		return;
-	/* union by size optimization */
+	/* union by rank optimization */
+	/* uses negative ranking */
 	if (ds[p1] < ds[p2]) {
 		ds[p2] = p1;
 	} else if (ds[p1] > ds[p2]) {
