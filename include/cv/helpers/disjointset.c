@@ -32,12 +32,13 @@ void dsunion(int *ds, int s1, int s2)
 	if (p1 == p2)
 		return;
 	/* union by size optimization */
-	if (ds[p1] <= ds[p2]) {
+	if (ds[p1] < ds[p2]) {
+		ds[p2] = p1;
+	} else if (ds[p1] > ds[p2]) {
+		ds[p1] = p2;
+	} else {
 		ds[p2] = p1;
 		ds[p1]--;
-	} else {
-		ds[p1] = p2;
-		ds[p2]--;
 	}
 }
 
