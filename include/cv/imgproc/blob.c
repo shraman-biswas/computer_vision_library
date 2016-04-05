@@ -16,8 +16,8 @@ void cv_conncomp(const MAT *m, MAT **res, int bg)
 	ds_t *labels=NULL;
 
 	/* setup disjoint-set of labels */
-	dscreate(&labels);
-	dsadd(labels, 0);
+	ds_create(&labels);
+	ds_add(labels, 0);
 
 	/* pass 1 */
 	for (i=1; i< m->size1-1; ++i) {
@@ -29,7 +29,7 @@ void cv_conncomp(const MAT *m, MAT **res, int bg)
 			b2 = (px == MGET(m, i-1, j));	/* check top pixel */
 			switch ((b1 << 1) | b2) {
 			case NONE:
-				dsadd(labels, cnt);
+				ds_add(labels, cnt);
 				MSET(*res, i, j, cnt++);
 				break;
 			case TOP_ONLY:
@@ -39,7 +39,7 @@ void cv_conncomp(const MAT *m, MAT **res, int bg)
 				l1 = MGET(*res, i, j-1); /* left pixel label */
 				l2 = MGET(*res, i-1, j); /* top pixel label */
 				if (l1 != l2)
-					dsunion(labels, l1, l2);
+					ds_union(labels, l1, l2);
 			case LEFT_ONLY:
 				MSET(*res, i, j, MGET(*res, i, j-1));
 				break;
@@ -50,8 +50,8 @@ void cv_conncomp(const MAT *m, MAT **res, int bg)
 	/* pass 2 */
 	for (i=1; i< m->size1-1; ++i) {
 		for (j=1; j< m->size2-1; ++j)
-			MSET(*res, i, j, dsfind(labels, MGET(*res, i, j)));
+			MSET(*res, i, j, ds_find(labels, MGET(*res, i, j)));
 	}
 
-	dsfree(&labels);
+	ds_free(&labels);
 }

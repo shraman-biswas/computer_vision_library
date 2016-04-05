@@ -16,10 +16,10 @@ typedef struct __ds_t {
 } ds_t;
 
 /* function prototypes */
-void dscreate(ds_t **ds);
-void dsfree(ds_t **ds);
-void dsadd(ds_t *ds, int set);
-void dsunion(ds_t *ds, int set1, int set2);
-int dsfind(ds_t *ds, int set);
+void ds_create(ds_t **ds);
+void ds_free(ds_t **ds);
+void ds_add(ds_t *ds, int set);
+void ds_union(ds_t *ds, int set1, int set2);
+int ds_find(ds_t *ds, int set);
 
 #endif

@@ -1,7 +1,7 @@
 #include "disjointset.h"
 
 /* create new disjoint-set */
-void dscreate(ds_t **ds)
+void ds_create(ds_t **ds)
 {
 	ds_t *tmp = (ds_t *)malloc(sizeof(ds_t));
 	if (!tmp)
@@ -17,14 +17,14 @@ void dscreate(ds_t **ds)
 }
 
 /* destroy disjoint-set */
-void dsfree(ds_t **ds)
+void ds_free(ds_t **ds)
 {
 	free((*ds)->items);
 	*ds = NULL;
 }
 
 /* add new set to disjoint-set */
-void dsadd(ds_t *ds, int set)
+void ds_add(ds_t *ds, int set)
 {
 	if (ds->total == ds->capacity)
 		ds->items = (int *)realloc(ds->items, ds->capacity * 2);
@@ -37,11 +37,11 @@ void dsadd(ds_t *ds, int set)
 }
 
 /* create union between set1 and set2 */
-void dsunion(ds_t *ds, int set1, int set2)
+void ds_union(ds_t *ds, int set1, int set2)
 {
 	int p1, p2;
-	p1 = dsfind(ds, set1);
-	p2 = dsfind(ds, set2);
+	p1 = ds_find(ds, set1);
+	p2 = ds_find(ds, set2);
 	if (p1 == p2)
 		return;
 
@@ -57,7 +57,7 @@ void dsunion(ds_t *ds, int set1, int set2)
 }
 
 /* find parent of set */
-int dsfind(ds_t *ds, int set)
+int ds_find(ds_t *ds, int set)
 {
 	int tmp, i = set;
 	while (ds->items[set] >= 0)
