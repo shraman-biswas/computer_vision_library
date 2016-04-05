@@ -23,7 +23,7 @@ int main(void)
 	MAT *img=NULL, *res=NULL;
 
 	/* create image matrix */
-	img = cv_imcreate(img_data, 12, 12);
+	cv_imcreate(&img, img_data, 12, 12);
 	printf("\nbinary image:\n");
 	cv_imprint(img);
 	/* cv_imshow("binary image", img); */

@@ -13,8 +13,10 @@ int main(void)
 {
 	printf("[ cv core example ]\n");
 
+	MAT *img=NULL;
+
 	/* create image matrix */
-	MAT *img = cv_imcreate(img_data, 5, 5);
+	cv_imcreate(&img, img_data, 5, 5);
 
 	/* print image pixels */
 	printf("\nimage:\n");

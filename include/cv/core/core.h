@@ -12,7 +12,7 @@
 #define MSET(m, i, j, x)	gsl_matrix_set((m), (i), (j), (x))
 
 /* function prototypes */
-MAT *cv_imcreate(const double *data, int rows, int cols);
+void cv_imcreate(MAT **m, const double *data, int rows, int cols);
 void cv_imprint(const MAT *m);
 void cv_to2d(const MAT *m, double **data);
 inline void cv_error(const char *msg);

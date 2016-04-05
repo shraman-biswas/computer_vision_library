@@ -15,8 +15,10 @@ int main(void)
 {
 	printf("[ cv highgui example ]\n");
 
+	MAT *img=NULL;
+
 	/* create image matrix */
-	MAT *img = cv_imcreate(img_data, 7, 7);
+	cv_imcreate(&img, img_data, 7, 7);
 
 	/* print image pixels */
 	printf("\nimage:\n");

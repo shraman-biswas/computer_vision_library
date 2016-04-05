@@ -1,17 +1,19 @@
 #include "core.h"
 
 /* create image matrix from image pixel data */
-MAT *cv_imcreate(const double *data, int rows, int cols)
+void cv_imcreate(MAT **m, const double *data, int rows, int cols)
 {
+	*m = gsl_matrix_alloc(rows, cols);
+	if (!(*m))
+		cv_error("cv_imcreate: result matrix not provided!\n");
+
 	if (!data)
 		cv_error("cv_imcreate: matrix data not provided!\n");
 	int i, j;
-	MAT *m = gsl_matrix_calloc(rows, cols);
 	for (i=0; i<rows; ++i) {
 		for (j=0; j<cols; ++j)
-			MSET(m, i, j, data[i * cols + j]);
+			MSET(*m, i, j, data[i * cols + j]);
 	}
-	return m;
 }
 
 /* print image matrix pixels */
