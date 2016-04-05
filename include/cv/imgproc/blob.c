@@ -11,7 +11,7 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
 
 	/* setup disjoint-set of labels */
-	labels = dscreate();
+	labels = dscreate(100);
 	dsadd(labels, 0);
 
 	/* pass 1 */

@@ -3,9 +3,9 @@
 /* TODO: implement disjoint-set with a forest */
 
 /* create new disjoint-set */
-int *dscreate(void)
+int *dscreate(int size)
 {
-	int *ds = (int *)calloc(DSMAX, sizeof(int));
+	int *ds = (int *)calloc(size, sizeof(int));
 	if (!ds)
 		cv_error("dscreate: disjoint-set could not be created!\n");
 	return ds;

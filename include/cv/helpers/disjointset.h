@@ -5,11 +5,15 @@
 
 #include "../core/core.h"
 
-/* macros */
-#define DSMAX	100
+/* disjoint-set structure */
+typedef struct __ds_t {
+	int *ds;
+	int capacity;
+	int total;
+} ds_t;
 
 /* function prototypes */
-int *dscreate(void);
+int *dscreate(int size);
 void dsfree(int *ds);
 void dsadd(int *ds, int d);
 void dsunion(int *ds, int s1, int s2);
