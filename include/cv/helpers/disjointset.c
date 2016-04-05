@@ -36,7 +36,7 @@ void dsadd(ds_t *ds, int set)
 	ds->total++;
 }
 
-/* create disjoint-set union between sets s1 and s2 */
+/* create union between set1 and set2 */
 void dsunion(ds_t *ds, int set1, int set2)
 {
 	int p1, p2;
@@ -44,8 +44,9 @@ void dsunion(ds_t *ds, int set1, int set2)
 	p2 = dsfind(ds, set2);
 	if (p1 == p2)
 		return;
+
 	/* union by size optimization */
-	/* uses negative ranking */
+	/* uses negative size */
 	if (ds->items[p1] <= ds->items[p2]) {
 		ds->items[p1] += ds->items[p2];
 		ds->items[p2] = p1;
@@ -55,12 +56,13 @@ void dsunion(ds_t *ds, int set1, int set2)
 	}
 }
 
-/* disjoint-set find parent of set */
+/* find parent of set */
 int dsfind(ds_t *ds, int set)
 {
 	int tmp, i = set;
 	while (ds->items[set] >= 0)
 		set = ds->items[set];
+
 	/* path compression optimization */
 	while (ds->items[i] >= 0) {
 		tmp = i;
