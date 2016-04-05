@@ -29,7 +29,7 @@ int main(void)
 	/* cv_imshow("binary image", img); */
 
 	/* labelled connected components */
-	res = cv_conncomp(img, 1);
+	cv_conncomp(img, &res, 1);
 	printf("\nlabelled connected components:\n");
 	cv_imprint(res);
 	cv_imshow("labelled connected components", res);

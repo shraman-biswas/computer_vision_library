@@ -16,6 +16,6 @@
 #define LEFT_AND_TOP	3
 
 /* function prototypes */
-MAT *cv_conncomp(const MAT *const m, int bg);
+void cv_conncomp(const MAT *m, MAT **res, int bg);
 
 #endif
