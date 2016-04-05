@@ -5,18 +5,21 @@
 
 #include "../core/core.h"
 
+/* macros */
+#define DS_SIZE	128
+
 /* disjoint-set structure */
 typedef struct __ds_t {
-	int *ds;
+	int *items;
 	int capacity;
 	int total;
 } ds_t;
 
 /* function prototypes */
-int *dscreate(int size);
-void dsfree(int *ds);
-void dsadd(int *ds, int d);
-void dsunion(int *ds, int s1, int s2);
-int dsfind(int *ds, int s);
+void dscreate(ds_t **ds);
+void dsfree(ds_t **ds);
+void dsadd(ds_t *ds, int set);
+void dsunion(ds_t *ds, int set1, int set2);
+int dsfind(ds_t *ds, int set);
 
 #endif

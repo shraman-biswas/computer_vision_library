@@ -6,12 +6,13 @@ MAT *cv_conncomp(const MAT *m, int bg)
 	if (!m)
 		cv_error("cv_conncomp: source matrix not provided!\n");
 
-	int i, j, b1, b2, l1, l2, cnt=1, *labels=NULL;
+	int i, j, b1, b2, l1, l2, cnt=1;
 	double px;
+	ds_t *labels=NULL;
 	MAT *res = gsl_matrix_calloc(m->size1, m->size2);
 
 	/* setup disjoint-set of labels */
-	labels = dscreate(100);
+	dscreate(&labels);
 	dsadd(labels, 0);
 
 	/* pass 1 */
@@ -48,6 +49,6 @@ MAT *cv_conncomp(const MAT *m, int bg)
 			MSET(res, i, j, dsfind(labels, MGET(res, i, j)));
 	}
 
-	dsfree(labels);
+	dsfree(&labels);
 	return res;
 }
